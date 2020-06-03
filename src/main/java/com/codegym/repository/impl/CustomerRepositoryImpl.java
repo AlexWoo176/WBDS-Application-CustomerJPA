@@ -14,6 +14,7 @@ import java.util.List;
 public class CustomerRepositoryImpl implements CustomerRepository {
 
     public static final String FIND_ALL = "select c from Customer c";
+    public static final String FIND_BY_ID = "select c from Customer c where  c.id=:id";
     @PersistenceContext
     private EntityManager em;
 
@@ -25,7 +26,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
     @Override
     public Customer findById(Long id) {
-        TypedQuery<Customer> query = em.createQuery("select c from Customer c where  c.id=:id", Customer.class);
+        TypedQuery<Customer> query = em.createQuery(FIND_BY_ID, Customer.class);
         query.setParameter("id", id);
         try {
             return query.getSingleResult();
